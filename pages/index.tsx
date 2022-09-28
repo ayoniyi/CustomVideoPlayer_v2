@@ -14,6 +14,8 @@ const Home: NextPage = () => {
   const currentTime: any = useRef()
   const timelineContainer: any = useRef()
   const speedBtn: any = useRef()
+  const previewImg: any = useRef()
+  const thumbnailImg: any = useRef()
   //const timelineContainer = document.querySelector(".timeline-container") as HTMLElement | null
 
   //functions
@@ -105,30 +107,89 @@ const Home: NextPage = () => {
     }
   }
 
+  //6. Timeline
+
+  const handleTimelineUpdate = (e: any) => {
+    const rect = timelineContainer.current.getBoundingClientRect()
+    const percent: any = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width
+    // const previewImgNumber = Math.max(
+    //   1,
+    //   Math.floor((percent * video.current.duration) / 10)
+    // )
+    // const previewImgSrc = `previewImgs/preview${previewImgNumber}.jpg`
+    // previewImg.current.src = previewImgSrc
+    timelineContainer.current.style.setProperty("--preview-position", percent)
+
+    if (isScrubbing) {
+      e.preventDefault()
+      //thumbnailImg.current.src = previewImgSrc
+      timelineContainer.current.style.setProperty("--progress-position", percent)
+    }
+
+  }
+  let isScrubbing = false
+  let wasPaused: any
+
+
+  const toggleScrubbing = (e: any) => {
+    const rect = timelineContainer.current.getBoundingClientRect()
+    const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width
+    isScrubbing = (e.buttons & 1) === 1
+    if (videoContainer !== null) {
+      videoContainer.current.classList.toggle("scrubbing", isScrubbing)
+      if (video !== null) {
+        if (isScrubbing) {
+          wasPaused = video.current.paused
+          video.current.pause()
+        } else {
+          video.current.currentTime = percent * video.current.duration
+          if (!wasPaused) video.current.play()
+        }
+      }
+    }
+
+    handleTimelineUpdate(e)
+  }
+  const skip = (duration: any) => {
+    video.current.currentTime += duration
+  }
+
+
   // keyboard events
   useEffect(() => {
     setIsLoading(false)
-    document.addEventListener("keydown", e => {
-      if (document.activeElement !== null) {
-        const tagName: any = document.activeElement.tagName.toLowerCase()
-        if (tagName === "input") return
+    if (!isLoading) {
+      document.addEventListener("keydown", e => {
+        if (document.activeElement !== null) {
+          const tagName: any = document.activeElement.tagName.toLowerCase()
+          if (tagName === "input") return
 
-        switch (e.key.toLowerCase()) {
-          case " ":
-            if (tagName === "button") return
-          case "k":
-            handlePlayPause()
-            break
-          // video can be played or paused using the spacebar or letter k
-          case "m":
-            handleMute()
-            break
-          // mute can be toggled using "m" on keyboard
-
+          switch (e.key.toLowerCase()) {
+            case " ":
+              if (tagName === "button") return
+            case "k":
+              handlePlayPause()
+              break
+            // video can be played or paused using the spacebar or letter k
+            case "m":
+              handleMute()
+              break
+            // mute can be toggled using "m" on keyboard
+            case "arrowleft":
+            case "j":
+              skip(-4)
+              break
+            case "arrowright":
+            case "l":
+              skip(4)
+              break
+            // fast forward or reverse by 4 seconds using arrow left or right
+          }
         }
-      }
-    })
+      })
+    }
   }, [isLoading])
+
 
   // 
   useEffect(() => {
@@ -148,8 +209,16 @@ const Home: NextPage = () => {
     }
     handleVideoDuration()
 
-  }, [])
+    timelineContainer.current.addEventListener("mousemove", handleTimelineUpdate)
+    timelineContainer.current.addEventListener("mousedown", toggleScrubbing)
+    document.addEventListener("mouseup", e => {
+      if (isScrubbing) toggleScrubbing(e)
+    })
+    document.addEventListener("mousemove", e => {
+      if (isScrubbing) handleTimelineUpdate(e)
+    })
 
+  }, [])
 
 
 
@@ -165,11 +234,15 @@ const Home: NextPage = () => {
       <main >
         <div className="video-container paused"
           data-volume-level="high" ref={videoContainer}>
-          <img className="thumbnail-img" alt="thumbnail" />
+          <img className="thumbnail-img" alt="thumbnail" ref={thumbnailImg} />
           <div className="video-controls-container">
-            <div className="timeline-container" ref={timelineContainer}>
+            <div className="timeline-container"
+              ref={timelineContainer}
+            // onMouseMove={handleTimelineUpdate}
+            // onMouseDown={toggleScrubbing}
+            >
               <div className="timeline">
-                <img className="preview-img" alt="preview" />
+                {/* <img className="preview-img" alt="preview" ref={previewImg} /> */}
                 <div className="thumb-indicator"></div>
               </div>
             </div>
