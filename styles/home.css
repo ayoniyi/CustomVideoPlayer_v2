@@ -1,17 +1,37 @@
 .video-container {
     position: relative;
-    width: 90%;
+    width: 60%;
+    /* height: 70vh; */
     max-width: 1000px;
     display: flex;
     justify-content: center;
     margin-inline: auto;
+    margin-top: 5em;
     background-color: black;
+    border: 3px solid rgba(255, 255, 255, 0.373);
+    /* border: 1px solid #52525B; */
+    border-radius: 40px;
+    padding: 1.5em;
+    cursor: pointer;
+    transition: 0.4s ease-in;
+}
+
+.video-container:hover {
+    transition: 0.4s ease-in;
+    backdrop-filter: blur(0px);
+    /* background: linear-gradient(25.28deg,
+            rgba(255, 255, 255, 0.42) 0%,
+            rgba(255, 255, 255, 0.12) 100%); */
+    transform: scale(1.015);
+    /* margin-top: 4.5em; */
 }
 
 .video-container.theater,
 .video-container.full-screen {
     max-width: initial;
     width: 100%;
+    border: none;
+    transition: .1s ease-in;
 }
 
 .video-container.theater {
@@ -24,6 +44,33 @@
 
 video {
     width: 100%;
+}
+
+.big-btn {
+    /* background: pink; */
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    padding: .6em;
+    top: 45%;
+    border-radius: 50%;
+    background: black;
+    border: 2px solid #fff;
+    outline: none;
+    z-index: 1;
+    transition: .5s ease-in;
+    cursor: pointer;
+    display: none;
+}
+
+.big-btn:hover {
+    /* background: rgb(240, 94, 94); */
+    transition: .5s ease-in;
+    display: block;
+}
+
+.video-container:hover .big-btn {
+    display: block;
 }
 
 .video-controls-container {
@@ -42,7 +89,10 @@ video {
     position: absolute;
     bottom: 0;
     background: linear-gradient(to top, rgba(0, 0, 0, .75), transparent);
-    width: 100%;
+    width: 98%;
+    margin: auto;
+    border-radius: 40px;
+    padding: .5em;
     aspect-ratio: 6 / 1;
     z-index: -1;
     pointer-events: none;
@@ -59,6 +109,9 @@ video {
     gap: .5rem;
     padding: .25rem;
     align-items: center;
+    /* background: pink; */
+    width: 95%;
+    margin: auto;
 }
 
 .video-controls-container .controls button {
@@ -95,6 +148,10 @@ video {
 }
 
 .video-container.full-screen .open {
+    display: none;
+}
+
+.video-container.full-screen .big-btn {
     display: none;
 }
 
@@ -143,6 +200,8 @@ video {
     align-items: center;
     gap: .25rem;
     flex-grow: 1;
+    /* margin-left: 30%; */
+
 }
 
 .video-container.captions .captions-btn {
@@ -154,18 +213,21 @@ video {
 }
 
 .timeline-container {
-    height: 7px;
-    margin-inline: .5rem;
+    height: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
+    width: 92%;
+    margin: 1em auto;
 }
 
 .timeline {
     background-color: rgba(100, 100, 100, .5);
+    border-radius: 40px;
     height: 3px;
     width: 100%;
-    position: relative
+    position: relative;
+    /* bottom: 2em; */
 }
 
 .timeline::before {
@@ -177,6 +239,7 @@ video {
     right: calc(100% - var(--preview-position) * 100%);
     background-color: rgb(150, 150, 150);
     display: none;
+    border-radius: 40px;
 }
 
 .timeline::after {
@@ -186,7 +249,8 @@ video {
     top: 0;
     bottom: 0;
     right: calc(100% - var(--progress-position) * 100%);
-    background-color: red;
+    background-color: rgb(205, 58, 58);
+    border-radius: 40px;
 }
 
 .timeline .thumb-indicator {
@@ -196,7 +260,8 @@ video {
     height: 200%;
     top: -50%;
     left: calc(var(--progress-position) * 100%);
-    background-color: red;
+    /* background-color: red; */
+    background-color: rgb(205, 58, 58);
     border-radius: 50%;
     transition: transform 150ms ease-in-out;
     aspect-ratio: 1 / 1;
@@ -247,4 +312,43 @@ video {
 .video-container.scrubbing .timeline,
 .timeline-container:hover .timeline {
     height: 100%;
+}
+
+/* media queries */
+@media (max-width: 980px) {
+    .video-container {
+        width: 85%;
+        max-width: 1000px;
+        margin-top: 5em;
+        border-radius: 20px;
+        padding: 1em;
+        cursor: pointer;
+        transition: 0.4s ease-in;
+    }
+
+    .big-btn {
+        height: 65px;
+        width: 65px;
+    }
+}
+
+@media (max-width: 500px) {
+    .video-container {
+        width: 95%;
+        border: none;
+        border-radius: 0;
+        padding: .3em;
+        font-size: .8em;
+    }
+
+    .video-controls-container .controls button {
+        height: 20px;
+        width: 20px;
+        font-size: .9rem;
+    }
+
+    .big-btn {
+        display: none !important;
+
+    }
 }

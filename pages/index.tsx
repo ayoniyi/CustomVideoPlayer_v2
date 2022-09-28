@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   const timelineContainer: any = useRef()
   const speedBtn: any = useRef()
   const previewImg: any = useRef()
-  const thumbnailImg: any = useRef()
+  //const thumbnailImg: any = useRef()
   //const timelineContainer = document.querySelector(".timeline-container") as HTMLElement | null
 
   //functions
@@ -232,20 +232,20 @@ const Home: NextPage = () => {
       </Head>
 
       <main >
+
         <div className="video-container paused"
           data-volume-level="high" ref={videoContainer}>
-          <img className="thumbnail-img" alt="thumbnail" ref={thumbnailImg} />
+          {/* <img className="thumbnail-img" alt="thumbnail" ref={thumbnailImg} /> */}
+          <button className="play-pause-btn big-btn" onClick={handlePlayPause}>
+            <svg className="play-icon" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+            </svg>
+            <svg className="pause-icon" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
+            </svg>
+          </button>
           <div className="video-controls-container">
-            <div className="timeline-container"
-              ref={timelineContainer}
-            // onMouseMove={handleTimelineUpdate}
-            // onMouseDown={toggleScrubbing}
-            >
-              <div className="timeline">
-                {/* <img className="preview-img" alt="preview" ref={previewImg} /> */}
-                <div className="thumb-indicator"></div>
-              </div>
-            </div>
+
             <div className="controls">
               <button className="play-pause-btn" onClick={handlePlayPause}>
                 <svg className="play-icon" viewBox="0 0 24 24">
@@ -326,6 +326,16 @@ const Home: NextPage = () => {
                     d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" />
                 </svg>
               </button>
+            </div>
+            <div className="timeline-container"
+              ref={timelineContainer}
+            // onMouseMove={handleTimelineUpdate}
+            // onMouseDown={toggleScrubbing}
+            >
+              <div className="timeline">
+                {/* <img className="preview-img" alt="preview" ref={previewImg} /> */}
+                <div className="thumb-indicator"></div>
+              </div>
             </div>
           </div>
 
