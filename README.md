@@ -1,34 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CustomVideoPlayer
 
-## Getting Started
+A full-featured, customizable video player built with React and Next.js. This project provides a modern, responsive video player with an intuitive user interface and extensive keyboard controls.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
+- **Playback Controls**: Play/pause, volume adjustment, muting
+- **Time Display**: Current time and total duration
+- **Timeline Scrubbing**: Click and drag to navigate through the video
+- **Playback Speed**: Adjustable playback speed (0.25x - 2x)
+- **Viewing Modes**:
+  - Picture-in-Picture mode
+  - Fullscreen mode
+- **Keyboard Controls**:
+  - Spacebar or "K": Play/pause
+  - "M": Mute/unmute
+  - Left Arrow or "J": Rewind 4 seconds
+  - Right Arrow or "L": Fast forward 4 seconds
+- **Responsive Design**: Adapts to different screen sizes with mobile support
+- **Custom UI**: Modern, clean interface with hover effects
+
+## Technologies Used
+
+- **Next.js**: React framework for production
+- **React**: UI component library
+- **TypeScript**: Type-safe JavaScript
+- **CSS**: Custom styling with responsive design
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/CustomVideoPlayer_v2.git
+   cd CustomVideoPlayer_v2
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
+## Usage
+
+The player loads with a default video (`slideVideo.mp4`). To use your own video:
+
+1. Add your video file to the `public` directory
+2. Update the video source in `pages/index.tsx`:
+
+```tsx
+<video
+  src="/your-video-file.mp4"
+  ref={video}
+  onPlay={handlePlay}
+  onPause={handlePause}
+  onClick={handlePlayPause}
+  onVolumeChange={handleVolumeChange}
+  onLoadedData={handleVideoDuration}
+  onTimeUpdate={handleTimeUpdate}
+></video>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Customization
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+You can customize the appearance of the video player by modifying the CSS in:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- `styles/home.css`: Contains specific styling for the video player
+- `styles/globals.css`: Contains global styles
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Project Structure
 
-## Learn More
+- `pages/index.tsx`: Main component with video player implementation
+- `styles/home.css`: Video player-specific styles
+- `public/`: Contains video assets
 
-To learn more about Next.js, take a look at the following resources:
+## Browser Compatibility
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The video player is compatible with modern browsers and uses standard HTML5 video APIs. For the best experience, use the latest versions of Chrome, Firefox, Safari, or Edge.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
+MIT
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Contributions are welcome! Please feel free to submit a Pull Request.
